@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000&display=swap');
+
+@layer base {
+  :root {
+    --cream: #F2EDE8;
+    --cream-alt: #EBE5DF;
+    --crimson: #D85C5C;
+    --crimson-hover: #C44A4A;
+    --cyan: #00C9B7;
+    --cyan-glow: rgba(0, 201, 183, 0.35);
+    --text: #1A1816;
+    --text-muted: #4A4540;
+    --border: #E0D9D2;
+    --font-display: "Syne", system-ui, sans-serif;
+    --font-body: "DM Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-cream text-[#1A1816] antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* High-tech grid background */
+.bg-grid-pattern {
+  background-color: #F2EDE8;
+  background-image: 
+    linear-gradient(to right, rgba(0, 201, 183, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 201, 183, 0.06) 1px, transparent 1px),
+    linear-gradient(to right, rgba(216, 92, 92, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(216, 92, 92, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px, 64px 64px, 16px 16px, 16px 16px;
+}
+
+/* Glass card effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 4px 24px -8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Tech glow border */
+.tech-glow {
+  box-shadow: 
+    0 0 0 1px rgba(0, 201, 183, 0.15),
+    0 0 24px -4px rgba(0, 201, 183, 0.2);
+}
+
+/* Subtle scanline overlay */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.02) 2px,
+    rgba(0, 0, 0, 0.02) 4px
+  );
+  pointer-events: none;
+}
