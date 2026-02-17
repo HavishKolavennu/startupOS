@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { config } from "@/lib/config";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -58,9 +59,22 @@ export function Navigation() {
         </ul>
 
         <div className="flex items-center gap-4">
-          <Button asChild size="sm" className="hidden sm:inline-flex">
-            <Link href="/product">Explore the Product</Link>
-          </Button>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <Button variant="outline" size="sm" className="hidden sm:inline-flex">
+                Sign In
+              </Button>
+            </SignInButton>
+            <Button asChild size="sm" className="hidden sm:inline-flex">
+              <Link href="/product">Explore the Product</Link>
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <Button asChild size="sm" className="hidden sm:inline-flex">
+              <Link href="/portal">Portal</Link>
+            </Button>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
           <button
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -102,7 +116,21 @@ export function Navigation() {
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
+              <li className="pt-2 space-y-2">
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <Button variant="outline" className="w-full" onClick={() => setMobileOpen(false)}>
+                      Sign In
+                    </Button>
+                  </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <Button asChild className="w-full">
+                    <Link href="/portal" onClick={() => setMobileOpen(false)}>
+                      Portal
+                    </Link>
+                  </Button>
+                </SignedIn>
                 <Button asChild className="w-full">
                   <Link href="/product" onClick={() => setMobileOpen(false)}>
                     Explore the Product

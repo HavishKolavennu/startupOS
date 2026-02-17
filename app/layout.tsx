@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
@@ -17,14 +19,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="font-body min-h-screen flex flex-col">
-        <Navigation />
-        <main className="flex-1 pt-16">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className="font-body min-h-screen flex flex-col">
+          <ConvexClientProvider>
+            <Navigation />
+            <main className="flex-1 pt-16">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Footer />
+          </ConvexClientProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
