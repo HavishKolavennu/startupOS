@@ -5,7 +5,7 @@
 export const config = {
   brand: {
     name: "StartupOS",
-    tagline: "Start your startup like it already has an ops team.",
+    tagline: "Run your startup like it already has an ops team.",
   },
   colors: {
     background: "#F6EFE6",

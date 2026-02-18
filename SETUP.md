@@ -60,12 +60,12 @@ npm run dev
 
 ## 4. AI Chatbot (Optional)
 
-To enable the AI copilot in the portal:
+To enable the AI copilot in the portal (uses **Google Gemini** — free tier available):
 
-1. Get an API key from [OpenAI](https://platform.openai.com/api-keys)
+1. Get an API key from [Google AI Studio](https://aistudio.google.com/apikey) (free)
 2. In Convex Dashboard → Settings → Environment Variables, add:
-   - **Name:** `OPENAI_API_KEY`
-   - **Value:** your OpenAI API key (starts with `sk-`)
+   - **Name:** `GOOGLE_GENERATIVE_AI_API_KEY`
+   - **Value:** your Google AI API key
 3. Restart `npx convex dev` to pick up the new variable
 
 The copilot appears on the NDCutz portal and the Product demo page. It can answer questions about your subscriptions, revenue, and give advice.
