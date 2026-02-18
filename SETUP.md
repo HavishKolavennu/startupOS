@@ -70,6 +70,24 @@ To enable the AI copilot in the portal (uses **Google Gemini** — free tier ava
 
 The copilot appears on the NDCutz portal and the Product demo page. It can answer questions about your subscriptions, revenue, and give advice.
 
+## 5. Deploy to Vercel
+
+Vercel does **not** use `.env.local`. Add these environment variables in Vercel:
+
+1. Go to [Vercel Dashboard](https://vercel.com/dashboard) → your project → **Settings** → **Environment Variables**
+2. Add each variable (use the same values from your `.env.local`):
+
+| Name | Value | Notes |
+|------|-------|-------|
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `pk_test_...` | From Clerk Dashboard → API Keys |
+| `CLERK_SECRET_KEY` | `sk_test_...` | From Clerk Dashboard → API Keys |
+| `NEXT_PUBLIC_CONVEX_URL` | `https://xxx.convex.cloud` | From your Convex project |
+
+3. Enable them for **Production**, **Preview**, and **Development**
+4. **Redeploy** (Deployments → ⋮ on latest → Redeploy)
+
+Without these, the build will fail with "Missing publishableKey".
+
 ## Portal Features
 
 - **Subscriptions**: Track Neon, Twilio, Domain, and add more

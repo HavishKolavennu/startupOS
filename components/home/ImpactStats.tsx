@@ -10,42 +10,48 @@ const stats = [
     value: 20,
     suffix: "%",
     label: "of startups fail within the first year",
-    source: "forbes",
+    sourceName: "Forbes Advisor",
+    sourceUrl: "https://www.forbes.com/advisor/business/startup-statistics/",
     progress: 20,
   },
   {
     value: 50,
     suffix: "%",
     label: "fail within five years",
-    source: "forbes",
+    sourceName: "Forbes Advisor",
+    sourceUrl: "https://www.forbes.com/advisor/business/startup-statistics/",
     progress: 50,
   },
   {
     value: 65,
     suffix: "%",
     label: "fail within ten years",
-    source: "forbes",
+    sourceName: "Forbes Advisor",
+    sourceUrl: "https://www.forbes.com/advisor/business/startup-statistics/",
     progress: 65,
   },
   {
     value: 42,
     suffix: "%",
     label: "fail due to no market need",
-    source: "cbinsights",
+    sourceName: "CB Insights",
+    sourceUrl: "https://www.cbinsights.com/research/startup-failure-reasons-top/",
     progress: 42,
   },
   {
     value: 29,
     suffix: "%",
     label: "fail because they ran out of cash",
-    source: "cbinsights",
+    sourceName: "CB Insights",
+    sourceUrl: "https://www.cbinsights.com/research/startup-failure-reasons-top/",
     progress: 29,
   },
   {
     value: 80,
     suffix: "+",
-    label: "survive year one in many regions (BLS data)",
-    source: "bls",
+    label: "survive year one in many regions",
+    sourceName: "U.S. Bureau of Labor Statistics",
+    sourceUrl: "https://www.bls.gov/bdm/",
     progress: 80,
   },
 ];
@@ -92,19 +98,20 @@ export function ImpactStats() {
               }
               className="rounded-2xl border border-white/60 bg-white/80 backdrop-blur-sm p-8 shadow-card hover:shadow-tech-glow relative overflow-hidden group transition-all"
             >
-              <Link
-                href="/sources"
-                className="absolute top-3 right-3 text-[10px] text-[#5C5650]/60 hover:text-crimson transition-colors"
-                aria-label="View source"
-              >
-                [cite]
-              </Link>
               <div className="font-display text-4xl md:text-5xl font-bold text-cyan">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </div>
               <p className="mt-3 text-[#5C5650] text-sm leading-relaxed">
                 {stat.label}
               </p>
+              <a
+                href={stat.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-block text-xs text-cyan/80 hover:text-cyan hover:underline"
+              >
+                — {stat.sourceName}
+              </a>
               <div className="mt-4 h-1.5 bg-cream-dark rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}

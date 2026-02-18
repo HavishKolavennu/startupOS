@@ -39,8 +39,8 @@ export function HowItWorks() {
         </motion.h2>
 
         <div className="relative">
-          {/* Connecting line - desktop */}
-          <div className="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-white/60 overflow-hidden">
+          {/* Connecting line - desktop: sits in gap between number boxes and titles */}
+          <div className="hidden lg:block absolute top-[4.25rem] left-0 right-0 h-0.5 bg-white/60 overflow-hidden">
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
