@@ -71,7 +71,7 @@ export default function NdcutzPortalPage() {
     `Total monthly subscription cost: $${totalMonthlySubs.toFixed(0)}`,
     `Monthly revenue (latest): $${mrr.toLocaleString()}`,
     `Net margin: $${netMargin.toFixed(0)}`,
-    `Revenue by month: ${revenueEntries?.map((r) => `${r.month}: $${r.revenue}`).join(", ") ?? "none"}`,
+    `Revenue by month: ${revenueEntries?.map((r: Doc<"monthlyRevenue">) => `${r.month}: $${r.revenue}`).join(", ") ?? "none"}`,
   ].join("\n");
 
   if (workspace === undefined) {
