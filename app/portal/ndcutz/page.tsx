@@ -67,7 +67,7 @@ export default function NdcutzPortalPage() {
 
   const copilotContext = [
     `Workspace: ${workspace?.name} (${workspace?.businessType ?? "barbershop"})`,
-    `Subscriptions: ${subscriptions?.map((s) => `${s.vendor}: $${s.cost}/mo (${s.billingCycle ?? "monthly"})`).join(", ") ?? "none"}`,
+    `Subscriptions: ${subscriptions?.map((s: Doc<"subscriptions">) => `${s.vendor}: $${s.cost}/mo (${s.billingCycle ?? "monthly"})`).join(", ") ?? "none"}`,
     `Total monthly subscription cost: $${totalMonthlySubs.toFixed(0)}`,
     `Monthly revenue (latest): $${mrr.toLocaleString()}`,
     `Net margin: $${netMargin.toFixed(0)}`,
