@@ -58,8 +58,21 @@ npm run dev
    - **Sample monthly revenue** for Sep 2024 – Feb 2025
 5. You can then add/edit subscriptions and revenue from the NDCutz dashboard
 
+## 4. AI Chatbot (Optional)
+
+To enable the AI copilot in the portal:
+
+1. Get an API key from [OpenAI](https://platform.openai.com/api-keys)
+2. In Convex Dashboard → Settings → Environment Variables, add:
+   - **Name:** `OPENAI_API_KEY`
+   - **Value:** your OpenAI API key (starts with `sk-`)
+3. Restart `npx convex dev` to pick up the new variable
+
+The copilot appears on the NDCutz portal and the Product demo page. It can answer questions about your subscriptions, revenue, and give advice.
+
 ## Portal Features
 
 - **Subscriptions**: Track Neon, Twilio, Domain, and add more
 - **Monthly Revenue**: Log revenue by month
 - **KPIs**: Monthly revenue, subscription costs, net margin
+- **AI Copilot**: Chat with an AI assistant about your data (requires OpenAI API key)

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CopilotPanel } from "@/components/product/CopilotPanel";
 
 export default function NdcutzPortalPage() {
   const workspace = useQuery(api.workspaces.getBySlug, { slug: "ndcutz" });
@@ -64,6 +65,15 @@ export default function NdcutzPortalPage() {
   const mrr = latestRevenue;
   const netMargin = mrr - totalMonthlySubs;
 
+  const copilotContext = [
+    `Workspace: ${workspace?.name} (${workspace?.businessType ?? "barbershop"})`,
+    `Subscriptions: ${subscriptions?.map((s) => `${s.vendor}: $${s.cost}/mo (${s.billingCycle ?? "monthly"})`).join(", ") ?? "none"}`,
+    `Total monthly subscription cost: $${totalMonthlySubs.toFixed(0)}`,
+    `Monthly revenue (latest): $${mrr.toLocaleString()}`,
+    `Net margin: $${netMargin.toFixed(0)}`,
+    `Revenue by month: ${revenueEntries?.map((r) => `${r.month}: $${r.revenue}`).join(", ") ?? "none"}`,
+  ].join("\n");
+
   if (workspace === undefined) {
     return (
       <div className="mx-auto max-w-7xl px-6 py-16 flex justify-center">
@@ -85,8 +95,9 @@ export default function NdcutzPortalPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="space-y-10"
+        className="grid lg:grid-cols-[1fr_360px] gap-8"
       >
+        <div className="space-y-10 min-w-0">
         <div>
           <h1 className="font-display text-3xl font-bold text-[#1A1816]">
             {workspace.name}
@@ -224,6 +235,14 @@ export default function NdcutzPortalPage() {
               <Button type="submit" size="sm">Add</Button>
             </form>
           </div>
+        </div>
+        </div>
+        <div className="lg:sticky lg:top-24 h-fit">
+          <CopilotPanel
+            context={copilotContext}
+            title="NDCutz Copilot"
+            subtitle="Ask about subscriptions, revenue, or get advice"
+          />
         </div>
       </motion.div>
     </div>

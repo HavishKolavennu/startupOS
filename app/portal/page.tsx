@@ -3,13 +3,15 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function PortalPage() {
   const workspaces = useQuery(api.workspaces.getByOwner);
   const seedNdcutz = useMutation(api.seed.seedNdcutz);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (workspaces === undefined) return;
@@ -20,11 +22,17 @@ export default function PortalPage() {
   }, [workspaces, router]);
 
   const handleSetupNdcutz = async () => {
+    setLoading(true);
+    setError(null);
     try {
       await seedNdcutz();
       router.push("/portal/ndcutz");
     } catch (e) {
+      const message = e instanceof Error ? e.message : "Something went wrong";
+      setError(message);
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,10 +60,16 @@ export default function PortalPage() {
           </p>
           <button
             onClick={handleSetupNdcutz}
-            className="mt-6 px-6 py-3 bg-cyan text-white font-medium rounded-xl hover:bg-cyan/90 transition-colors shadow-card"
+            disabled={loading}
+            className="mt-6 px-6 py-3 bg-cyan text-white font-medium rounded-xl hover:bg-cyan/90 transition-colors shadow-card disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Set up NDCutz workspace
+            {loading ? "Setting up…" : "Set up NDCutz workspace"}
           </button>
+          {error && (
+            <p className="mt-4 text-sm text-crimson">
+              {error}
+            </p>
+          )}
         </motion.div>
       </div>
     );

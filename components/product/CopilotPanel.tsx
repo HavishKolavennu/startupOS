@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useAction } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -11,26 +13,43 @@ const suggestedPrompts = [
   "Draft an outreach email to a potential partner.",
 ];
 
-export function CopilotPanel() {
+interface CopilotPanelProps {
+  context?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+export function CopilotPanel({ context, title = "Startup Copilot", subtitle = "AI assistant for your metrics" }: CopilotPanelProps) {
   const [messages, setMessages] = useState<
     { role: "user" | "assistant"; content: string }[]
   >([]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const chatAction = useAction(api.chat.chat);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    setMessages((m) => [...m, { role: "user", content: input.trim() }]);
+  const handleSend = async () => {
+    if (!input.trim() || loading) return;
+    const userMessage = input.trim();
+    setMessages((m) => [...m, { role: "user", content: userMessage }]);
     setInput("");
-    // Simulate AI response - structure ready for API
-    setTimeout(() => {
+    setLoading(true);
+    try {
+      const { content } = await chatAction({
+        messages: [...messages, { role: "user", content: userMessage }],
+        context,
+      });
+      setMessages((m) => [...m, { role: "assistant", content }]);
+    } catch (e) {
       setMessages((m) => [
         ...m,
         {
           role: "assistant",
-          content: "This is a demo. Connect an AI API to enable real responses.",
+          content: `Error: ${e instanceof Error ? e.message : "Something went wrong"}`,
         },
       ]);
-    }, 600);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,10 +61,10 @@ export function CopilotPanel() {
     >
       <div className="p-4 border-b border-[#E5DDD4] bg-cream/30">
         <h3 className="font-display text-sm font-semibold text-[#2D2A26]">
-          Startup Copilot
+          {title}
         </h3>
         <p className="text-xs text-[#5C5650] mt-0.5">
-          AI assistant for your metrics
+          {subtitle}
         </p>
       </div>
 
@@ -98,8 +117,8 @@ export function CopilotPanel() {
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             className="flex-1"
           />
-          <Button onClick={handleSend} size="icon">
-            →
+          <Button onClick={handleSend} size="icon" disabled={loading}>
+            {loading ? "…" : "→"}
           </Button>
         </div>
       </div>
